@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: practical-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: practical-app
+  template:
+    metadata:
+      labels:
+        app: practical-app
+    spec:
+      containers:
+        - name: practical-app
+          image: DOCKERHUB_USERNAME/practical-app:latest
+          ports:
+            - containerPort: 5000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 3
+            periodSeconds: 5
